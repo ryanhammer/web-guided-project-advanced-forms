@@ -1,23 +1,18 @@
-import React from 'react'
+import React from 'react';
 
 export default function FriendForm(props) {
-  const {
-    values,
-    submit,
-    change,
-    disabled,
-    errors,
-  } = props
+  const { values, submit, change, disabled, errors } = props;
 
   const onSubmit = evt => {
-    evt.preventDefault()
-    submit()
+    evt.preventDefault();
+    submit();
   }
 
   const onChange = evt => {
     /* 🔥 FIX THIS SO IT ALSO WORKS WITH CHECKBOXES */
-    const { name, value } = evt.target
-    change(name, value)
+    const { name, value, type, checked } = evt.target;
+    const valueToUse = type === 'checkbox' ? checked : value;
+    change(name, valueToUse);
   }
 
   return (
@@ -26,7 +21,7 @@ export default function FriendForm(props) {
         <h2>Add a Friend</h2>
 
         {/* 🔥 DISABLE THE BUTTON */}
-        <button>submit</button>
+        <button disabled={disabled}>submit</button>
 
         <div className='errors'>
           {/* 🔥 RENDER THE VALIDATION ERRORS HERE */}
@@ -40,8 +35,6 @@ export default function FriendForm(props) {
       <div className='form-group inputs'>
         <h4>General information</h4>
 
-        {/* ////////// TEXT INPUTS ////////// */}
-        {/* ////////// TEXT INPUTS ////////// */}
         {/* ////////// TEXT INPUTS ////////// */}
         <label>Username&nbsp;
           <input
@@ -62,8 +55,6 @@ export default function FriendForm(props) {
         </label>
 
         {/* ////////// DROPDOWN ////////// */}
-        {/* ////////// DROPDOWN ////////// */}
-        {/* ////////// DROPDOWN ////////// */}
         <label>Role
           <select
             onChange={onChange}
@@ -79,14 +70,24 @@ export default function FriendForm(props) {
         </label>
 
         {/* ////////// RADIO BUTTONS ////////// */}
-        {/* ////////// RADIO BUTTONS ////////// */}
-        {/* ////////// RADIO BUTTONS ////////// */}
         <label>Single
-
+          <input
+            type='radio'
+            name='civil'
+            value='single' // this option is 'hardcoded' and spread out like dropdown
+            onChange={onChange}
+            checked={values.civil === 'single'}
+          />
         </label>
 
         <label>Married
-
+        <input
+            type='radio'
+            name='civil'
+            value='married' // this option is 'hardcoded' and spread out like dropdown
+            onChange={onChange}
+            checked={values.civil === 'married'}
+          />
         </label>
       </div>
 
@@ -94,18 +95,31 @@ export default function FriendForm(props) {
         <h4>Hobbies</h4>
 
         {/* ////////// CHECKBOXES ////////// */}
-        {/* ////////// CHECKBOXES ////////// */}
-        {/* ////////// CHECKBOXES ////////// */}
         <label>Hiking
-
+          <input
+            type='checkbox'
+            name='hiking'
+            onChange={onChange}
+            checked={values.hiking}
+          />
         </label>
 
         <label>Reading
-
+          <input
+            type='checkbox'
+            name='reading'
+            onChange={onChange}
+            checked={values.reading}
+          />
         </label>
 
         <label>Coding
-
+          <input
+            type='checkbox'
+            name='coding'
+            onChange={onChange}
+            checked={values.coding}
+          />
         </label>
       </div>
     </form>
